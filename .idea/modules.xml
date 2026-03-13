@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/grpcClient/grpcClient.iml" filepath="$PROJECT_DIR$/grpcClient/grpcClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/java-grpc.iml" filepath="$PROJECT_DIR$/.idea/java-grpc.iml" />
+    </modules>
+  </component>
+</project>

@@ -9,6 +9,10 @@ import org.example.unarygrpcserver.models.Stock;
 import org.example.unarygrpcserver.repos.StockRepository;
 import org.springframework.grpc.server.service.GrpcService;
 
+import java.time.Instant;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 @GrpcService
 @AllArgsConstructor
 public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradingServiceImplBase {
@@ -26,5 +30,24 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
 
         responseObserver.onNext(stockResponseDTO);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void subscribeStockPrice(StockRequestDTO request, StreamObserver<StockResponseDTO> responseObserver) {
+        String symbol = request.getStockSymbol();
+        try {
+            for (int i = 0; i < 10; i++) {
+                StockResponseDTO stockResponseDTO = StockResponseDTO.newBuilder()
+                        .setPrice(new Random().nextDouble(200))
+                        .setStockSymbol(symbol)
+                        .setTimestamps(Instant.now().toString())
+                        .build();
+                responseObserver.onNext(stockResponseDTO);
+                TimeUnit.SECONDS.sleep(1);
+            }
+            responseObserver.onCompleted();
+        } catch (InterruptedException e) {
+        responseObserver.onError(e);
+    }
     }
 }
